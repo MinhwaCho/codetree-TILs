@@ -12,47 +12,35 @@ P_list, S_list = [], []
 for i in range(N):
     inp = list(map(int, input().split()))
     P_list.append(inp[0]); S_list.append(inp[1])
-# N,B = 5,24
-# P_list = [4,2,8,6,12]
-# S_list = [2,0,1,3,5]
-
-student = [True]*N
-price = sum(P_list)+sum(S_list)
-result = 0
 
 
-def calculate_payment(s_list, all_price):
-    res = all_price
+total_cost = [(P_list[i]+S_list[i]) for i in range(N)]
+total_cost.sort()
+# print(total_cost)
+
+def apply_coupon(ind):
+    t_list = []
     for i in range(N):
-        price = all_price
-        if s_list[i]:
-            price -= (P_list[i] + S_list[i])
-            price += ((P_list[i]//2) + S_list[i])
-            if price <= B:
-                res = price
-                return res
-    return res
+        if i == ind: t_list.append((P_list[i]//2)+S_list[i]); continue
+        t_list.append(P_list[i]+S_list[i])
+    return t_list
 
+max_count = 0
+for i in range(N):
+    max_student_count = 0
+    price_count = 0
 
-price = calculate_payment(student, price)
-def dfs(ind, payment):
-    global student
-    global result
+    total_coupon_cost = apply_coupon(i)
+    total_coupon_cost.sort()
+    # print(total_coupon_cost)
 
-    if payment <= B:
-        result =  max(result, sum(student))
-        return
-    else:
-        for i in range(N-1, ind-1, -1):
-            if student[i]:
-                student[i] = False
-                payment = 0
-                for i in range(N):
-                    if student[i]:
-                        payment += (P_list[i] + S_list[i])
-                payment = calculate_payment(student, payment)
-                # print(student, payment)
-                dfs(i, payment)
-                student[i] = True
-dfs(0, price)
-print(result)
+    for j in range(N):
+        if price_count > B:
+            break
+        price_count += total_coupon_cost[j]
+        max_student_count += 1
+    
+    # print(price_count, max_student_count-1)
+    max_count = max(max_count, max_student_count-1)
+
+print(max_count)
