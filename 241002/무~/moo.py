@@ -1,4 +1,4 @@
-N=15
+N=int(input())
 
 s = [["m","o","o"]]
 def divide_conquer(ind):
