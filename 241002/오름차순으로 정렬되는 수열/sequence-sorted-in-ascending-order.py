@@ -6,14 +6,17 @@ check_list = [int(input()) for i in range(N)]
 target_ind = 0
 for i in range(N-1):
     if check_list[i] > check_list[i+1]:
-        if i!=N-2 and check_list[i] > check_list[i-1]:
-            target_ind = i
-            arr = check_list[target_ind+1:]
-        else:
-            target_ind = i+1
-            arr = check_list[:target_ind]
+        if i != 0:
+            if check_list[i+1] <= check_list[i-1]:
+                target_ind = i+1
+                arr = check_list[:target_ind]
+                
+            else:
+                target_ind = i
+                arr = check_list[target_ind+1:]
 
 # print("target index: ", target_ind)
+# print("target num:", check_list[target_ind])
 # print("Array:", arr)
 
 cnt = 0
