@@ -102,8 +102,9 @@ def choose_basecamp(end_x, end_y):
                     queue.append([nx, ny, path+[(nx,ny)]])
                     visited[nx][ny] = True
 
-        if len(s_path) == 0 or len(s_path) > len(i_path):
+        if len(i_path)>0 and (len(s_path) == 0 or len(s_path) > len(i_path)):
             s_path = i_path
+
     return s_path[0]
 
 # 시뮬레이션
